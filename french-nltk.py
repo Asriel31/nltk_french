@@ -94,12 +94,12 @@ def normalize_counts(counts):
 def print_sorted_dictionary(tuple_dict):
     '''print the results of sort_dictionary'''
     for tup in tuple_dict:
-        print unicode(tup[1])[0:10] + '\t\t' + unicode(tup[0])
+        print (unicode(tup[1])[0:10] + '\t\t' + unicode(tup[0]))
         
 def print_words(words):
     '''clean print the unicode words'''
     for word in words:
-        print word
+        print (word)
         
 #USING STANFORD'S FRENCH POS TAGGER, v.3.2
 #http://nlp.stanford.edu/software/tagger.shtml
@@ -136,29 +136,29 @@ def pos_tag(to_tag,model_path = root_path + "\\stanford-postagger-full-2013-06-2
 
 def print_pos_tags(tags):
     '''print all the tags with their part of speech; tag[0] is the word; tag[1] is the Part of Speech'''
-    for tag in tags: print tag[1]+'\t',tag[0] 
+    for tag in tags: print (tag[1]+'\t',tag[0] )
             
 def get_pos_tags(tags,pos='ANY'):
     '''get all the tags with their part of speech; tag[0] is the word; tag[1] is the Part of Speech'''
     pos=pos.upper()
     get_tags = []
     if pos=='ANY':
-        print 'Please specify a tag to get' 
+        print ('Please specify a tag to get') 
     else:
         tag_abbreviations_upper = {k.upper():v for k,v in tag_abbreviations.items()}
         if pos in tag_abbreviations_upper:
             for tag in tags: 
                 if tag[1].upper()==pos: get_tags.append(tag[0])
         else:
-            print "%s is not a valid search term." %(pos)
+            print ("%s is not a valid search term." %(pos))
     return get_tags
             
 def search_pos(tags,search_term,pos):
     '''look for a particular POS word prior to the search term, see what comes after the search term'''
-    print "POS\tPREC\t\tS.TERM\t\tSUC\n"
+    print ("POS\tPREC\t\tS.TERM\t\tSUC\n")
     for i,tag in enumerate(tags):
         if tags[i-1][1].upper()==pos.upper() and tag[0].lower()==search_term.lower():
-            print str(i)+'\t'+tags[i-1][0]+"\t" + tag[0] + "\t" + tags[i+1][0]
+            print (str(i)+'\t'+tags[i-1][0]+"\t" + tag[0] + "\t" + tags[i+1][0])
 
 # <headingcell level=2>
 
@@ -182,7 +182,7 @@ for root,dirs,files in os.walk(xml_path): #walk through the filepath and look fo
     for file in files:
         if file.endswith('.xml'):
             xmls.append(file)
-print "Files Loaded: ",xmls
+print ("Files Loaded: ",xmls)
 
 
 documents=[] #initialize an empty documents array
@@ -223,7 +223,7 @@ french_stopwords = get_stopswords()
 #print a sorted dictionary of all stemmed and filtered words for each text
 for document in documents:
     filtered_words = filter_stopwords(document['text'],french_stopwords)
-    print '\n',document['newspaper'],'\t',document['date'],'\n---------------'
+    print ('\n',document['newspaper'],'\t',document['date'],'\n---------------')
     print_sorted_dictionary(sort_dictionary(Counter(stem_words(filtered_words))))
 
 # <codecell>
@@ -239,9 +239,9 @@ def stemmed_adjectives(tokens):
      print_sorted_dictionary(adjective_count) #print the adjectives
         
 for document in documents:
-     print '\n',document['newspaper'],' - ',document['date'],'\n-----------------------------'
-     print stemmed_adjectives(document['tokens'])
-print 'ALL TEXT\n----------\n', stemmed_adjectives(all_documents['tokens'])
+     print ('\n',document['newspaper'],' - ',document['date'],'\n-----------------------------')
+     print (stemmed_adjectives(document['tokens']))
+print ('ALL TEXT\n----------\n', stemmed_adjectives(all_documents['tokens']))
 
 # <codecell>
 
@@ -264,20 +264,20 @@ print_sorted_dictionary(sorted_stemmed_words)
 
 # <codecell>
 
-print Counter([tag[1] for tag in tags]) #count the parts of speech
+print (Counter([tag[1] for tag in tags])) #count the parts of speech
 
 # <codecell>
 
-for document in documents: print document['newspaper'],': ',document['date'],'\n\n',document['raw'],'\n\n*******\n\n' #print out all the paragraphs from each xml file
+for document in documents: print (document['newspaper']),': ',document['date'],'\n\n',document['raw'],'\n\n*******\n\n' #print out all the paragraphs from each xml file
 
 # <codecell>
 
 # print the concordance of a term for all of our nltk documents that had been read in from the xml files
 for document in documents:
-    print "DATE: %s \t NEWSPAPER: %s" %(document['date'],document['newspaper'])
-    print '------'
-    print document['text'].concordance('Martinique')
-    print '\n'
+    print ("DATE: %s \t NEWSPAPER: %s" %(document['date'],document['newspaper']))
+    print ('------')
+    print (document['text'].concordance('Martinique'))
+    print ('\n')
 
 # <codecell>
 
